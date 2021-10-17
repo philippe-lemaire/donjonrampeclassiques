@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form %}
+
+{% block title %}
+Donjon Rampe Classiques | Créer un personnage
+{% endblock %}
+
+{% block content %}
+<h1>Créer un personnage</h1>
+<br>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{url_for('main.index')}}">Taverne</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Créer un personnage</li>
+    </ol>
+</nav>
+<br>
+{{ render_form(characterform) }}
+{% endblock %}

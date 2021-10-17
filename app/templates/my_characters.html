@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}
+Donjon Rampe Classiques | Mes personnages
+{% endblock %}
+
+{% block content %}
+<h1>Mes Personnages</h1>
+
+<table class="table table-hover table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Classe</th>
+            <th scope="col">Niveau</th>
+            <th scope='col'>PV</th>
+            <th scope='col'>CA naturelle</th>
+            <th scope="col">Dernière modif</th>
+            <th scope="col">Modifier</th>
+            <th scope="col">Supprimer</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for char in characters %}
+        <tr>
+            <th scope="row">{{ loop.index }}</th>
+            <td>{{char.name}}</td>
+            <td>{{char.class_}}</td>
+            <td>{{char.level}}</td>
+            <td>{{char.hp}}</td>
+            <td>{{char.ac}}</td>
+            <td>{{ moment(char.last_updated).fromNow(refresh=True) }}</td>
+            <td><a href="{{url_for('main.edit_character', id=char.id)}}">📝</a></td>
+            <td><a class='danger' href="{{url_for('main.delete_character', id=char.id)}}">❌</a></td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+
+<a class="btn btn-primary" role="button" href="{{url_for('main.create_character')}}">Créer un autre personnage</a>
+
+<a class="btn btn-primary" role="button" href="#">Gagner un niveau</a>
+
+{% endblock %}

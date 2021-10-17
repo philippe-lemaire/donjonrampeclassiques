@@ -16,10 +16,6 @@ from wtforms.validators import DataRequired, Length, Email, Regexp, EqualTo, Opt
 from app.models import User
 
 
-
-
-
-
 class ProfileForm(FlaskForm):
     email = StringField("Email", validators=[DataRequired(), Length(1, 128), Email()])
     username = StringField("Username", validators=[DataRequired()])
@@ -31,3 +27,11 @@ class ProfileForm(FlaskForm):
     )
     password2 = PasswordField("Confirm new password")
     submit = SubmitField("Update profile")
+
+
+class CharacterCreationForm(FlaskForm):
+    name = StringField("Nom du personnage, laisser vide pour un nom aléatoire.")
+    alignment = RadioField(
+        label="Choisissez votre alignement", choices=["Chaotique", "Neutre", "Loyal"]
+    )
+    submit = SubmitField("Montjoie !")
