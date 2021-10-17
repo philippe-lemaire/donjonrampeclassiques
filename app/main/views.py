@@ -5,7 +5,7 @@ from flask_login import login_required, current_user
 from sqlalchemy import desc
 from . import main
 from app.models import User, Character
-from .forms import ProfileForm, CharacterCreationForm
+from .forms import ProfileForm, CharacterCreationForm, CharacterEditForm
 from werkzeug.utils import secure_filename
 from os import path
 from .. import db
@@ -123,12 +123,61 @@ def my_characters():
     return render_template("my_characters.html", characters=characters)
 
 
-@main.route("/modifier_personnage/<int:id>")
+@main.route("/modifier_personnage/<int:id>", methods=["GET", "POST"])
 @login_required
 def edit_character(id):
     character = Character.query.get_or_404(id)
+    if current_user.id != character.user_id:
+        abort(403)
+    form = CharacterEditForm()
+    if form.validate_on_submit():
+        character.name = form.name.data
+        character.nickname = form.nickname.data
+
+        character.xp = form.xp.data
+        character.title = form.title.data
+        character.occupation = form.occupation.data
+        character.strength = form.strength.data
+        character.agility = form.agility.data
+        character.stamina = form.stamina.data
+        character.personality = form.personality.data
+        character.intelligence = form.intelligence.data
+        character.luck = form.luck.data
+        character.alignment = form.alignment.data
+
+        character.languages = form.languages.data
+        character.patron = form.patron.data
+        flash(f"{character.name} a été modifié…")
+        db.session.commit()
+        return redirect(url_for("main.my_characters"))
     # Create and fill in the form
-    return render_template("edit_character.html", character=character)
+    form.name.data = character.name
+    form.nickname.data = character.nickname
+    form.level.data = character.level
+    form.class_.data = character.class_
+    form.xp.data = character.xp
+    form.title.data = character.title
+    form.occupation.data = character.occupation
+    form.ac.data = character.ac
+    form.hp.data = character.hp
+    form.speed.data = character.speed
+    form.init.data = character.init
+    form.strength.data = character.strength
+    form.agility.data = character.agility
+    form.stamina.data = character.stamina
+    form.personality.data = character.personality
+    form.intelligence.data = character.intelligence
+    form.luck.data = character.luck
+    form.reflex.data = character.reflex
+    form.fortitude.data = character.fortitude
+    form.will.data = character.will
+    form.alignment.data = character.alignment
+    form.birthsign.data = character.birthsign
+    form.languages.data = character.languages
+    form.patron.data = character.patron
+    form.spells_known.data = character.spells_known
+
+    return render_template("edit_character.html", character=character, form=form)
 
 
 @main.route("/supprimer/personnage/<int:id>")
