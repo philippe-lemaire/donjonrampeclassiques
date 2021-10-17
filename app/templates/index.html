@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}
+Donjon Rampe Classiques
+{% endblock %}
+
+{% block content %}
+<h1>Bonjour
+    {% if current_user.is_authenticated %}
+    {{ current_user.username }}
+    {% else %}
+    l'ami…
+    {% endif %}!
+</h1>
+
+<br>
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h2 class="display-4">Bienvenue sur Donjon Rampe Classiques</h2>
+        <p class="lead">Créez vos héros et votre bande d'aventuriers pour le jeu de rôle Dungeon Crawl Classics de
+            <a href="https://goodman-games.com/dungeon-crawl-classics-rpg/">Goodman Games</a>, version française publiée
+            par <a href="https://akileos.fr/boutique/index.php?id_category=16&controller=category"
+                target="_blank">Akileos</a>.
+        </p>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form %}
+
+{% block title %}
+Donjon Rampe Classique | Créer un compte
+{% endblock %}
+
+{% block content %}
+<h1>Créer un compte</h1>
+{{ render_form(form) }}
+{% endblock %}

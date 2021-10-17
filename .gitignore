@@ -1,0 +1,12 @@
+.python-version
+*.egg-info
+.coverage
+.ipynb_checkpoints
+.DS_Store
+raw_data/
+*.csv
+**/__pycache__/
+.env
+notebooks/
+tmp/
+app/static/img/uploads/*

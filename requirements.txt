@@ -1,0 +1,37 @@
+# packaging
+pip>=9
+setuptools>=26
+twine
+wheel>=0.29
+
+# tests/linter
+black
+coverage
+pytest
+
+# Web Framework stuff
+flask
+bootstrap-flask
+Flask-WTF
+Flask-SQLAlchemy
+email-validator
+Flask-Moment
+Flask-Migrate
+flask-login
+alembic
+blinker
+dominate
+click
+Mako
+MarkupSafe
+python-dateutil
+python-editor
+six
+visitor
+WTForms
+python-dotenv
+flask-sslify
+psycopg2-binary
+gunicorn
+
+
