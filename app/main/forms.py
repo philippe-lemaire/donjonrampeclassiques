@@ -65,5 +65,7 @@ class CharacterEditForm(FlaskForm):
     languages = StringField(label="Langues")
     patron = StringField(label="Patron")
     spells_known = StringField(label="Sorts Connus")
+    inventory = StringField(label="Inventaire")
+    proficient_weapons = StringField(label="Armes maîtrisées")
 
     submit = SubmitField("Montjoie !")

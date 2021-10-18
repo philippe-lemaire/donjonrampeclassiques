@@ -70,6 +70,8 @@ class Character(db.Model):
     last_updated = db.Column(db.DateTime())
     patron = db.Column(db.String(128), nullable=True)
     spells_known = db.Column(db.String(128), nullable=True)
+    inventory = db.Column(db.String(128), nullable=True)
+    proficient_weapons = db.Column(db.String(128), nullable=True)
 
 
 @login_manager.user_loader
