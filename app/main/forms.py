@@ -61,6 +61,7 @@ class CharacterEditForm(FlaskForm):
     will = IntegerField(label="Vol.")
     alignment = StringField(label="Alignement", render_kw={"readonly": True})
     birthsign = StringField(label="Naissance", render_kw={"readonly": True})
+    birthsign_effect = StringField(label="Jet chanceux", render_kw={"readonly": True})
     languages = StringField(label="Langues")
     patron = StringField(label="Patron")
     spells_known = StringField(label="Sorts Connus")

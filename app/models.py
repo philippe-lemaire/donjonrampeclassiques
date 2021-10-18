@@ -65,6 +65,7 @@ class Character(db.Model):
     will = db.Column(db.Integer)
     alignment = db.Column(db.String(64))
     birthsign = db.Column(db.String(64))
+    birthsign_effect = db.Column(db.String(128))
     languages = db.Column(db.String(128), nullable=True)
     last_updated = db.Column(db.DateTime())
     patron = db.Column(db.String(128), nullable=True)
