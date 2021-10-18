@@ -11,19 +11,8 @@ from os import path
 from .. import db
 from .. import config
 from .birthsigns import birthsigns
-
-
-def threedsix():
-    """returns 3d6 for stat generation"""
-    return randint(1, 6) + randint(1, 6) + randint(1, 6)
-
-
-ability_modifiers = {
-    k: v
-    for k, v in zip(
-        range(3, 19), [-3, -2, -2, -1, -1, -1, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3]
-    )
-}
+from .occupations import occupations
+from .utils import threedsix, ability_modifiers
 
 
 @main.route("/")
@@ -77,7 +66,12 @@ def create_character():
         character.class_ = "Paysan"
         character.xp = 0
         character.title = ""  # TODO add randomtables for titles
-        character.occupation = ""  # TODO add randomtables for occupation
+        occupation_roll = randint(1, 100)
+        character.occupation = occupations[occupation_roll][0]
+        character.proficient_weapons = occupations[occupation_roll][1]
+        character.inventory = (
+            f"{occupations[occupation_roll][1]}, {occupations[occupation_roll][2]}"
+        )
 
         character.strength = threedsix()
         character.agility = threedsix()
@@ -178,6 +172,8 @@ def edit_character(id):
     form.languages.data = character.languages
     form.patron.data = character.patron
     form.spells_known.data = character.spells_known
+    form.inventory.data = character.inventory
+    form.proficient_weapons.data = character.proficient_weapons
 
     return render_template("edit_character.html", character=character, form=form)
 
