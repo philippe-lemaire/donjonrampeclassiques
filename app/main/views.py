@@ -10,6 +10,7 @@ from werkzeug.utils import secure_filename
 from os import path
 from .. import db
 from .. import config
+from .birthsigns import birthsigns
 
 
 def threedsix():
@@ -100,7 +101,7 @@ def create_character():
 
         character.init = ability_modifiers[character.agility]
         character.alignment = characterform.alignment.data
-        character.birthsign = "TODO"  # TODO add randomtables for birthsign
+        character.birthsign, character.birthsign_effect = birthsigns[randint(1, 30)]
         character.languages = str(
             [
                 "Commun",
@@ -173,6 +174,7 @@ def edit_character(id):
     form.will.data = character.will
     form.alignment.data = character.alignment
     form.birthsign.data = character.birthsign
+    form.birthsign_effect.data = character.birthsign_effect
     form.languages.data = character.languages
     form.patron.data = character.patron
     form.spells_known.data = character.spells_known
