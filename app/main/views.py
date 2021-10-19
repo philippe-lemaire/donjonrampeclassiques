@@ -228,12 +228,17 @@ def fumble_roll(die):
 @login_required
 def level_up_character(id):
     char = Character.query.get_or_404(id)
+    # check user owns the character
     if current_user.id != char.user_id:
         abort(403)
+    # check the character hasn't reached max level 10
     if char.level >= 10:
         flash("Ce personnage a atteint son niveau maximum, espèce de munchkin.")
         return redirect(url_for("main.character_detail", id=char.id))
-    if char.level == 0:
+    # check if its the first level up and char is human
+    demihumans = ["Nain", "Elfe", "Halfelin"]
+
+    if char.level == 0 and char.occupation.split(" ")[0] not in demihumans:
         form = ClassSelectionForm()
         if form.validate_on_submit():
             char.level += 1
@@ -246,14 +251,20 @@ def level_up_character(id):
                 extra_hp = 1
             char.hp += extra_hp
             db.session.commit()
-            flash(f"{char.name} est monté d’un niveau.")
+            flash(
+                f"{char.name} est monté d’un niveau et a gagné {extra_hp} points de vie."
+            )
             return redirect(url_for("main.character_detail", id=char.id))
         return render_template("class_selection.html", form=form)
+    # assign race as class for demihumans
+    if char.level == 0 and char.occupation.split(" ")[0] in demihumans:
+        char.class_ = char.occupation.split(" ")[0]
+    # general case level up
     char.level += 1
     extra_hp = ability_modifiers[char.stamina] + randint(1, hit_die[char.class_])
     if extra_hp < 1:
         extra_hp = 1
     char.hp += extra_hp
     db.session.commit()
-    flash(f"{char.name} est monté d’un niveau.")
+    flash(f"{char.name} est monté d’un niveau et a gagné {extra_hp} points de vie.")
     return redirect(url_for("main.character_detail", id=char.id))

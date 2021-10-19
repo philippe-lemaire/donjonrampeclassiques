@@ -15,7 +15,7 @@ Donjon Rampe Classiques | Mes personnages
             <th scope="col">Classe</th>
             <th scope="col">Niveau</th>
             <th scope='col'>PV</th>
-            <th scope='col'>CA naturelle</th>
+            <th scope='col'>Métier</th>
             <th scope="col">Dernière modif</th>
             <th scope="col">Modifier</th>
             <th scope="col">Supprimer</th>
@@ -29,7 +29,7 @@ Donjon Rampe Classiques | Mes personnages
             <td>{{char.class_}}</td>
             <td>{{char.level}}</td>
             <td>{{char.hp}}</td>
-            <td>{{char.ac}}</td>
+            <td>{{char.occupation}}</td>
             <td>{{ moment(char.last_updated).fromNow(refresh=True) }}</td>
             <td><a href="{{url_for('main.edit_character', id=char.id)}}">📝</a></td>
             <td><a class='danger' href="{{url_for('main.delete_character', id=char.id)}}">❌</a></td>
@@ -40,7 +40,4 @@ Donjon Rampe Classiques | Mes personnages
 </table>
 
 <a class="btn btn-primary" role="button" href="{{url_for('main.create_character')}}">Créer un autre personnage</a>
-
-<a class="btn btn-primary" role="button" href="#">Gagner un niveau</a>
-
 {% endblock %}
