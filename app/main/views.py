@@ -5,14 +5,19 @@ from flask_login import login_required, current_user
 from sqlalchemy import desc
 from . import main
 from app.models import User, Character
-from .forms import ProfileForm, CharacterCreationForm, CharacterEditForm
+from .forms import (
+    ProfileForm,
+    CharacterCreationForm,
+    CharacterEditForm,
+    ClassSelectionForm,
+)
 from werkzeug.utils import secure_filename
 from os import path
 from .. import db
 from .. import config
 from .birthsigns import birthsigns
 from .occupations import occupations
-from .utils import threedsix, ability_modifiers
+from .utils import threedsix, ability_modifiers, hit_die
 from .fumbles import fumbles
 
 
@@ -217,3 +222,38 @@ def fumble_roll(die):
         f"Tu as lancé un {roll}. Pense à ajuster en soustrayant to modificateur de chance."
     )
     return redirect(url_for("main.fumbles_list"))
+
+
+@main.route("/monter_de_niveau/<int:id>", methods=["GET", "POST"])
+@login_required
+def level_up_character(id):
+    char = Character.query.get_or_404(id)
+    if current_user.id != char.user_id:
+        abort(403)
+    if char.level >= 10:
+        flash("Ce personnage a atteint son niveau maximum, espèce de munchkin.")
+        return redirect(url_for("main.character_detail", id=char.id))
+    if char.level == 0:
+        form = ClassSelectionForm()
+        if form.validate_on_submit():
+            char.level += 1
+            char.class_ = form.class_.data
+
+            extra_hp = ability_modifiers[char.stamina] + randint(
+                1, hit_die[char.class_]
+            )
+            if extra_hp < 1:
+                extra_hp = 1
+            char.hp += extra_hp
+            db.session.commit()
+            flash(f"{char.name} est monté d’un niveau.")
+            return redirect(url_for("main.character_detail", id=char.id))
+        return render_template("class_selection.html", form=form)
+    char.level += 1
+    extra_hp = ability_modifiers[char.stamina] + randint(1, hit_die[char.class_])
+    if extra_hp < 1:
+        extra_hp = 1
+    char.hp += extra_hp
+    db.session.commit()
+    flash(f"{char.name} est monté d’un niveau.")
+    return redirect(url_for("main.character_detail", id=char.id))

@@ -12,3 +12,13 @@ ability_modifiers = {
         range(3, 19), [-3, -2, -2, -1, -1, -1, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3]
     )
 }
+
+hit_die = {
+    "Guerrier": 12,
+    "Clerc": 8,
+    "Voleur": 6,
+    "Mage": 4,
+    "Nain": 10,
+    "Elfe": 6,
+    "Halfelin": 6,
+}

@@ -69,3 +69,12 @@ class CharacterEditForm(FlaskForm):
     proficient_weapons = StringField(label="Armes maîtrisées")
 
     submit = SubmitField("Montjoie !")
+
+
+class ClassSelectionForm(FlaskForm):
+    class_ = RadioField(
+        label="Selectionner une classe",
+        choices=["Guerrier", "Voleur", "Clerc", "Mage"],
+        validators=[DataRequired()],
+    )
+    submit = SubmitField("Montjoie !")
