@@ -13,6 +13,7 @@ from .. import config
 from .birthsigns import birthsigns
 from .occupations import occupations
 from .utils import threedsix, ability_modifiers
+from .fumbles import fumbles
 
 
 @main.route("/")
@@ -188,3 +189,22 @@ def delete_character(id):
     db.session.commit()
     flash(f"{char.name} a été supprimé. Paix à son âme…")
     return redirect(url_for("main.my_characters"))
+
+
+@main.route("/maladresses")
+def fumbles_list():
+    return render_template("fumbles.html", fumbles=fumbles.items())
+
+
+@main.route("/maladresses/<int:die>")
+def fumble_roll(die):
+    roll = randint(1, die)
+    if roll < 0:
+        roll = 0
+    if roll > 16:
+        roll = 16
+
+    flash(
+        f"Tu as lancé un {roll}. Pense à ajuster en soustrayant to modificateur de chance."
+    )
+    return redirect(url_for("main.fumbles_list"))
