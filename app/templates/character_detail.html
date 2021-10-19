@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}
+Donjon Rampe Classiques | {{character.name}}
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-6">
+            <table class="table table-striped">
+                <tr>
+                    <th colspan="2">{{character.name}}</th>
+                </tr>
+                <tr>
+                    <td>Niveau</td>
+                    <td>{{character.level}}</td>
+                </tr>
+                <tr>
+                    <td>Classe</td>
+                    <td>{{character.class_}}</td>
+                </tr>
+                <tr>
+                    <td>Métier</td>
+                    <td>{{character.occupation}}</td>
+                </tr>
+                <tr>
+                    <td>❤️</td>
+                    <td>{{character.hp}}</td>
+                </tr>
+                <tr>
+                    <td>CA</td>
+                    <td>{{character.ac}}</td>
+                </tr>
+                <tr>
+                    <td>Init</td>
+                    <td>{{character.init}}</td>
+                </tr>
+                <tr>
+                    <td>Alignement</td>
+                    <td>{{character.alignment}}</td>
+                </tr>
+                <tr>
+                    <td>Signe de naissance</td>
+                    <td>{{character.birthsign}}</td>
+                </tr>
+                <tr>
+                    <td>Lancers chanceux</td>
+                    <td>{{character.birthsign_effect}}</td>
+                </tr>
+            </table>
+
+        </div>
+        <div class="col-xs-6"> </div>
+        <div class="col-xs-6">
+            <table class="table table-striped">
+                <tr>
+                    <th scope="col">Caractéristique</th>
+                    <th scope="col">Valeur</th>
+                    <th scope="col">Mod</th>
+                </tr>
+                <tr>
+                    <td>Force</td>
+                    <td>{{character.strength}}</td>
+                    <td>{{mod[character.strength]}}</td>
+                </tr>
+                <tr>
+                    <td>Agilité</td>
+                    <td>{{character.agility}}</td>
+                    <td>{{mod[character.agility]}}</td>
+                </tr>
+                <tr>
+                    <td>Endurance</td>
+                    <td>{{character.stamina}}</td>
+                    <td>{{mod[character.stamina]}}</td>
+                </tr>
+                <tr>
+                    <td>Présence</td>
+                    <td>{{character.personality}}</td>
+                    <td>{{mod[character.personality]}}</td>
+                </tr>
+                <tr>
+                    <td>Intelligence</td>
+                    <td>{{character.intelligence}}</td>
+                    <td>{{mod[character.intelligence]}}</td>
+                </tr>
+                <tr>
+                    <td>Chance</td>
+                    <td>{{character.luck}}</td>
+                    <td>{{mod[character.luck]}}</td>
+                </tr>
+
+            </table>
+        </div>
+        <div class="col-xs-6"> </div>
+        <div class="col-xs-6">
+            <table class="table table-striped">
+                <tr>
+                    <th colspan="2">Jets de sauvegarde</th>
+                </tr>
+                <tr>
+                    <td>Réflexes</td>
+                    <td>{{character.reflex}}</td>
+                </tr>
+                <tr>
+                    <td>Vigueur</td>
+                    <td>{{character.fortitude}}</td>
+                </tr>
+                <tr>
+                    <td>Volonté</td>
+                    <td>{{character.will}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
