@@ -101,15 +101,15 @@ Donjon Rampe Classiques | {{character.name}}
                 </tr>
                 <tr>
                     <td>Réflexes</td>
-                    <td>{{character.reflex}}</td>
+                    <td>{{mod[character.agility] + save_bonuses[character.class_][character.level][0]}}</td>
                 </tr>
                 <tr>
                     <td>Vigueur</td>
-                    <td>{{character.fortitude}}</td>
+                    <td>{{mod[character.stamina] + save_bonuses[character.class_][character.level][1]}}</td>
                 </tr>
                 <tr>
                     <td>Volonté</td>
-                    <td>{{character.will}}</td>
+                    <td>{{mod[character.personality] + save_bonuses[character.class_][character.level][2]}}</td>
                 </tr>
             </table>
         </div>
