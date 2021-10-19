@@ -19,6 +19,8 @@ from .birthsigns import birthsigns
 from .occupations import occupations
 from .utils import threedsix, ability_modifiers, hit_die
 from .fumbles import fumbles
+from .class_bonuses import save_bonuses
+from app.main import class_bonuses
 
 
 @main.route("/")
@@ -129,7 +131,10 @@ def my_characters():
 def character_detail(id):
     character = Character.query.get_or_404(id)
     return render_template(
-        "character_detail.html", character=character, mod=ability_modifiers
+        "character_detail.html",
+        character=character,
+        mod=ability_modifiers,
+        save_bonuses=save_bonuses,
     )
 
 
