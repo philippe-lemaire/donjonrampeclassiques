@@ -123,7 +123,9 @@ def my_characters():
 @login_required
 def character_detail(id):
     character = Character.query.get_or_404(id)
-    return render_template("character_detail.html", character=character)
+    return render_template(
+        "character_detail.html", character=character, mod=ability_modifiers
+    )
 
 
 @main.route("/modifier_personnage/<int:id>", methods=["GET", "POST"])
