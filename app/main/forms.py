@@ -80,3 +80,11 @@ class ClassSelectionForm(FlaskForm):
         validators=[DataRequired()],
     )
     submit = SubmitField("Montjoie !")
+
+
+class LuckyWeaponSelectionForm(FlaskForm):
+    lucky_weapon = StringField(
+        label="Choisissez un type d’armes avec lesquelles vous appliquerez votre modificateur de chance",
+        validators=[DataRequired()],
+    )
+    submit = SubmitField("Montjoie !")

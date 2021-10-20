@@ -1,6 +1,6 @@
 from datetime import datetime
 from random import randint, choice
-from flask import render_template, redirect, url_for, flash, request, abort
+from flask import render_template, redirect, url_for, flash, abort
 from flask_login import login_required, current_user
 from sqlalchemy import desc
 from . import main
@@ -10,11 +10,11 @@ from .forms import (
     CharacterCreationForm,
     CharacterEditForm,
     ClassSelectionForm,
+    LuckyWeaponSelectionForm,
 )
 from werkzeug.utils import secure_filename
 from os import path
 from .. import db
-from .. import config
 from .birthsigns import birthsigns
 from .occupations import occupations
 from .utils import threedsix, ability_modifiers, hit_die
@@ -266,6 +266,9 @@ def level_up_character(id):
             flash(
                 f"{char.name} est monté d’un niveau et a gagné {extra_hp} points de vie."
             )
+            if char.class_ == "Guerrier":
+                return redirect(url_for("main.select_lucky_weapon", id=char.id))
+
             return redirect(url_for("main.character_detail", id=char.id))
         return render_template("class_selection.html", form=form)
     # assign race as class for demihumans
@@ -285,4 +288,25 @@ def level_up_character(id):
     char.hp += extra_hp
     db.session.commit()
     flash(f"{char.name} est monté d’un niveau et a gagné {extra_hp} points de vie.")
+    if char.class_ == "Nain" and char.level == 1:
+        return redirect(url_for("main.select_lucky_weapon", id=char.id))
     return redirect(url_for("main.character_detail", id=char.id))
+
+
+@main.route(
+    "/monter_de_niveau/selectionner_arme_chanceuse/<int:id>", methods=["GET", "POST"]
+)
+@login_required
+def select_lucky_weapon(id):
+    char = Character.query.get_or_404(id)
+    lucky_weapon_form = LuckyWeaponSelectionForm()
+    if lucky_weapon_form.validate_on_submit():
+        char.lucky_weapon = lucky_weapon_form.lucky_weapon.data
+        db.session.commit()
+        flash(f"{char.lucky_weapon} sera l’arme chanceuse de {char.name}")
+        return redirect(url_for("main.character_detail", id=char.id))
+    return render_template(
+        "lucky_weapon_selection.html",
+        char=char,
+        lucky_weapon_form=lucky_weapon_form,
+    )
