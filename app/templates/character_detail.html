@@ -56,7 +56,11 @@ Donjon Rampe Classiques | {{character.name}}
                 </tr>
                 <tr>
                     <td>Init</td>
+                    {% if character.class_ == "Guerrier" %}
+                    <td>{{character.init + character.level}}</td>
+                    {% else %}
                     <td>{{character.init}}</td>
+                    {% endif %}
                 </tr>
                 <tr>
                     <td>Vitesse</td>
