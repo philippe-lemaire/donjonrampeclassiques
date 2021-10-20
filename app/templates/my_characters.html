@@ -32,7 +32,7 @@ Donjon Rampe Classiques | Mes personnages
             <td>{{char.occupation}}</td>
             <td>{{ moment(char.last_updated).fromNow(refresh=True) }}</td>
             <td><a href="{{url_for('main.edit_character', id=char.id)}}">📝</a></td>
-            <td><a class='danger' href="{{url_for('main.delete_character', id=char.id)}}">❌</a></td>
+            <td><a class='danger' href="{{url_for('main.delete_character', id=char.id)}}">⚰️</a></td>
         </tr>
         {% endfor %}
 

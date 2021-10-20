@@ -39,12 +39,6 @@ def my_profile():
         current_user.username = profileform.username.data
         current_user.email = profileform.email.data
         current_user.password = profileform.password.data
-        # save the picture and update the user.picture database field
-        filename = secure_filename(profileform.picture.data.filename)
-        file_ext = path.splitext(filename)[1]
-        img_path = f"app/static/img/uploads/{current_user.id}{file_ext}"
-        profileform.picture.data.save(img_path)
-        current_user.picture = f"{current_user.id}{file_ext}"
         flash("Profile updated")
         db.session.commit()
         return redirect(url_for("main.index"))
@@ -53,12 +47,6 @@ def my_profile():
     profileform.username.data = current_user.username
     profileform.email.data = current_user.email
     return render_template("my_profile.html", profileform=profileform)
-
-
-@main.route("/utilisateur/<int:id>")
-def user_page(id):
-    user = User.query.get_or_404(id)
-    return render_template("user_page.html", user=user)
 
 
 @main.route("/créer_personnage", methods=["GET", "POST"])

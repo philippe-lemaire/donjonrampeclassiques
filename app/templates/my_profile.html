@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form %}
+
+{% block title %}
+Libraro | My Profile
+{% endblock %}
+
+{% block content %}
+<h1>Edit Profile</h1>
+<br></br>
+
+
+{{ render_form(profileform) }}
+{% endblock %}

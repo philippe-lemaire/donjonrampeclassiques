@@ -18,15 +18,15 @@ from app.models import User
 
 class ProfileForm(FlaskForm):
     email = StringField("Email", validators=[DataRequired(), Length(1, 128), Email()])
-    username = StringField("Username", validators=[DataRequired()])
+    username = StringField("Sobriquet", validators=[DataRequired()])
     password = PasswordField(
-        "Update password",
+        "Mettre à jour le mot de passe",
         validators=[
-            EqualTo("password2", message="Passwords must match."),
+            EqualTo("password2", message="Les mots de passe doivent correspondre."),
         ],
     )
-    password2 = PasswordField("Confirm new password")
-    submit = SubmitField("Update profile")
+    password2 = PasswordField("Confirmer le nouveau mot de passe")
+    submit = SubmitField("Mettre à jour")
 
 
 class CharacterCreationForm(FlaskForm):
@@ -43,13 +43,13 @@ class CharacterEditForm(FlaskForm):
     name = StringField(label="Nom")
 
     nickname = StringField(label="Sobriquet")
-    level = IntegerField(label="Niveau")
+    level = IntegerField(label="Niveau", render_kw={"readonly": True})
     class_ = StringField(label="Classe", render_kw={"readonly": True})
     xp = IntegerField(label="XP")
-    title = StringField(label="Titre")
+    title = StringField(label="Titre", render_kw={"readonly": True})
     occupation = StringField(label="Occupation", render_kw={"readonly": True})
     ac = IntegerField(label="CA", render_kw={"readonly": True})
-    hp = IntegerField(label="PV")
+    hp = IntegerField(label="PV", render_kw={"readonly": True})
     speed = IntegerField(label="Vitesse", render_kw={"readonly": True})
     init = IntegerField(label="Init", render_kw={"readonly": True})
     strength = IntegerField(label="Force")
@@ -58,15 +58,15 @@ class CharacterEditForm(FlaskForm):
     personality = IntegerField(label="Présence")
     intelligence = IntegerField(label="Intelligence")
     luck = IntegerField(label="Chance")
-    reflex = IntegerField(label="Réf.")
-    fortitude = IntegerField(label="Vig.")
-    will = IntegerField(label="Vol.")
+    reflex = IntegerField(label="Réf.", render_kw={"readonly": True})
+    fortitude = IntegerField(label="Vig.", render_kw={"readonly": True})
+    will = IntegerField(label="Vol.", render_kw={"readonly": True})
     alignment = StringField(label="Alignement", render_kw={"readonly": True})
     birthsign = StringField(label="Naissance", render_kw={"readonly": True})
     birthsign_effect = StringField(label="Jet chanceux", render_kw={"readonly": True})
     languages = StringField(label="Langues")
-    patron = StringField(label="Patron")
-    spells_known = StringField(label="Sorts Connus")
+    patron = StringField(label="Patron", render_kw={"readonly": True})
+    spells_known = StringField(label="Sorts Connus", render_kw={"readonly": True})
     inventory = StringField(label="Inventaire")
     proficient_weapons = StringField(label="Armes maîtrisées")
 
