@@ -33,5 +33,3 @@ python-dotenv
 flask-sslify
 psycopg2-binary
 gunicorn
-
-
