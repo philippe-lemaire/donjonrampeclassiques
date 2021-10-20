@@ -14,6 +14,10 @@ Donjon Rampe Classiques | {{character.name}}
                     <th colspan="2">{{character.name}}</th>
                 </tr>
                 <tr>
+                    <td>Sobriquet</td>
+                    <td>{{character.nickname}}</td>
+                </tr>
+                <tr>
                     <td>Titre</td>
                     <td>{{character.title}}</td>
                 </tr>
@@ -189,7 +193,12 @@ Donjon Rampe Classiques | {{character.name}}
 
 
 <br>
-<a class="btn btn-primary" role="button" href="{{url_for('main.level_up_character', id=character.id)}}">Monter de
-    niveau</a>
+
+<a class="btn btn-primary" role="button" href="{{url_for('main.edit_character', id=character.id)}}">📝 Modifier</a>
+
+<a class="btn btn-warning" role="button" href="{{url_for('main.level_up_character', id=character.id)}}">💪🏾 Niveau
+    supérieur</a>
+
+<a class="btn btn-danger" role="button" href="{{url_for('main.delete_character', id=character.id)}}">🗑️ Supprimer</a>
 
 {% endblock %}
