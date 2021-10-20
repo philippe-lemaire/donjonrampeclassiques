@@ -165,9 +165,10 @@ def edit_character(id):
 
         character.languages = form.languages.data
         character.patron = form.patron.data
+        character.inventory = form.inventory.data
         flash(f"{character.name} a été modifié…")
         db.session.commit()
-        return redirect(url_for("main.my_characters"))
+        return redirect(url_for("main.character_detail", id=character.id))
     # Create and fill in the form
     form.name.data = character.name
     form.nickname.data = character.nickname
