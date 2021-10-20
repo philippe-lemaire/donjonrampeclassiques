@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form %}
+
+{% block title %}
+Donjon Rampe Classiques | Choisir un type d’arme
+{% endblock %}
+
+{% block content %}
+<h1>Choisir un type d’armes</h1>
+<br>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{url_for('main.index')}}">Taverne</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Choisir un type d’arme</li>
+    </ol>
+</nav>
+<br>
+{{ render_form(lucky_weapon_form) }}
+{% endblock %}

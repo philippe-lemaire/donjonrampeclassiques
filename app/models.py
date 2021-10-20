@@ -72,6 +72,7 @@ class Character(db.Model):
     spells_known = db.Column(db.String(128), nullable=True)
     inventory = db.Column(db.String(128), nullable=True)
     proficient_weapons = db.Column(db.String(128), nullable=True)
+    lucky_weapon = db.Column(db.String(64), nullable=True)
 
 
 @login_manager.user_loader
