@@ -9,6 +9,7 @@ occupations = {
     8: ("Berger", "Bâton", "hien de berger**"),
     9: ("Boucher", "Hachoir (comme hachette)", "Tranche de viande"),
     10: ("Bouffon", "Fléchette", "Vêtements de soie"),
+    12: ("Bûcheron", "Hachette", "Fagot de bois"),
     11: ("Bûcheron", "Hachette", "Fagot de bois"),
     13: ("Bûcheron", "Hachette", "Fagot de bois"),
     14: ("Chaman", "Masse", "Herbes, 500 g"),
