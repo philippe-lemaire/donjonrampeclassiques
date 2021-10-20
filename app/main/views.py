@@ -21,6 +21,7 @@ from .utils import threedsix, ability_modifiers, hit_die
 from .fumbles import fumbles
 from .class_bonuses import level_bonuses, mighty_deeds
 from .random_names import random_names
+from .titles import titles
 
 
 @main.route("/")
@@ -136,6 +137,7 @@ def character_detail(id):
         mod=ability_modifiers,
         level_bonuses=level_bonuses,
         mighty_deeds=mighty_deeds,
+        titles=titles,
     )
 
 
@@ -258,6 +260,7 @@ def level_up_character(id):
             char.hp += extra_hp
             if char.name == "Anonyme":
                 char.name = choice(random_names.get(char.class_))
+            char.title = titles.get(char.class_).get(char.alignment).get(1)
             db.session.commit()
             flash(
                 f"{char.name} est monté d’un niveau et a gagné {extra_hp} points de vie."
@@ -271,6 +274,10 @@ def level_up_character(id):
     if char.name == "Anonyme":
         char.name = choice(random_names.get(char.class_))
     char.level += 1
+    title_level = char.level
+    if title_level > 5:
+        title_level = 5
+    char.title = titles.get(char.class_).get(char.alignment).get(title_level)
     extra_hp = ability_modifiers[char.stamina] + randint(1, hit_die[char.class_])
     if extra_hp < 1:
         extra_hp = 1
