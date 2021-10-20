@@ -30,7 +30,9 @@ class ProfileForm(FlaskForm):
 
 
 class CharacterCreationForm(FlaskForm):
-    name = StringField("Nom du personnage, laisser vide pour un nom aléatoire.")
+    name = StringField(
+        "Nom du personnage, laisser vide pour un nom aléatoire, qui sera attribué au niveau 1."
+    )
     alignment = RadioField(
         label="Choisissez votre alignement", choices=["Chaotique", "Neutre", "Loyal"]
     )
