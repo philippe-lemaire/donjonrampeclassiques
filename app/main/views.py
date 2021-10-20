@@ -1,5 +1,5 @@
 from datetime import datetime
-from random import randint
+from random import randint, choice
 from flask import render_template, redirect, url_for, flash, request, abort
 from flask_login import login_required, current_user
 from sqlalchemy import desc
@@ -20,6 +20,7 @@ from .occupations import occupations
 from .utils import threedsix, ability_modifiers, hit_die
 from .fumbles import fumbles
 from .class_bonuses import level_bonuses, mighty_deeds
+from .random_names import random_names
 
 
 @main.route("/")
@@ -66,7 +67,7 @@ def create_character():
     character = Character()
     if characterform.validate_on_submit():
         # create the character and commit to db
-        character.name = characterform.name.data
+        character.name = characterform.name.data or "Anonyme"
         character.user_id = current_user.id
         character.nickname = ""  # TODO add randomtables for nicknames
         character.level = 0
@@ -255,6 +256,8 @@ def level_up_character(id):
             if extra_hp < 1:
                 extra_hp = 1
             char.hp += extra_hp
+            if char.name == "Anonyme":
+                char.name = choice(random_names.get(char.class_))
             db.session.commit()
             flash(
                 f"{char.name} est monté d’un niveau et a gagné {extra_hp} points de vie."
@@ -265,6 +268,8 @@ def level_up_character(id):
     if char.level == 0 and char.occupation.split(" ")[0] in demihumans:
         char.class_ = char.occupation.split(" ")[0]
     # general case level up
+    if char.name == "Anonyme":
+        char.name = choice(random_names.get(char.class_))
     char.level += 1
     extra_hp = ability_modifiers[char.stamina] + randint(1, hit_die[char.class_])
     if extra_hp < 1:
