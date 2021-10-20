@@ -9,33 +9,17 @@ Donjon Rampe Classiques | {{character.name}}
 <div class="container">
     <div class="row">
         <div class="col-xs-6">
-            <table class="table table-striped">
+            <table class="table table-striped" style="width: 400px">
                 <tr>
                     <th colspan="2">{{character.name}}</th>
                 </tr>
                 <tr>
-                    <td>Niveau</td>
-                    <td>{{character.level}}</td>
-                </tr>
-                <tr>
-                    <td>Classe</td>
-                    <td>{{character.class_}}</td>
+                    <td>Titre</td>
+                    <td>{{character.title}}</td>
                 </tr>
                 <tr>
                     <td>Métier</td>
                     <td>{{character.occupation}}</td>
-                </tr>
-                <tr>
-                    <td>❤️</td>
-                    <td>{{character.hp}}</td>
-                </tr>
-                <tr>
-                    <td>CA</td>
-                    <td>{{character.ac}}</td>
-                </tr>
-                <tr>
-                    <td>Init</td>
-                    <td>{{character.init}}</td>
                 </tr>
                 <tr>
                     <td>Alignement</td>
@@ -49,6 +33,40 @@ Donjon Rampe Classiques | {{character.name}}
                     <td>Lancers chanceux</td>
                     <td>{{character.birthsign_effect}}</td>
                 </tr>
+            </table>
+
+        </div>
+        <div class="col-xs-6"> </div>
+        <div class="col-xs-6">
+            <table class="table table-striped">
+                <tr>
+                    <th colspan="2">{{character.class_}}</th>
+                </tr>
+                <tr>
+                    <td>Niveau</td>
+                    <td>{{character.level}}</td>
+                </tr>
+                <tr>
+                    <td>❤️</td>
+                    <td>{{character.hp}}</td>
+                </tr>
+                <tr>
+                    <td>🛡️</td>
+                    <td>{{character.ac}}</td>
+                </tr>
+                <tr>
+                    <td>Init</td>
+                    <td>{{character.init}}</td>
+                </tr>
+                <tr>
+                    <td>Vitesse</td>
+                    <td>{{character.speed}}</td>
+                </tr>
+                <tr>
+                    <td>🎲 d’action</td>
+                    <td>{{level_bonuses.get(character.class_).get(character.level)[4]}}</td>
+                </tr>
+
             </table>
 
         </div>
@@ -92,24 +110,73 @@ Donjon Rampe Classiques | {{character.name}}
                 </tr>
 
             </table>
+
         </div>
         <div class="col-xs-6"> </div>
         <div class="col-xs-6">
             <table class="table table-striped">
                 <tr>
-                    <th colspan="2">Jets de sauvegarde</th>
+                    <th colspan="2">JdS</th>
                 </tr>
                 <tr>
                     <td>Réflexes</td>
-                    <td>{{mod[character.agility] + save_bonuses[character.class_][character.level][0]}}</td>
+                    <td>{{mod[character.agility] + level_bonuses[character.class_][character.level][0]}}</td>
                 </tr>
                 <tr>
                     <td>Vigueur</td>
-                    <td>{{mod[character.stamina] + save_bonuses[character.class_][character.level][1]}}</td>
+                    <td>{{mod[character.stamina] + level_bonuses[character.class_][character.level][1]}}</td>
                 </tr>
                 <tr>
                     <td>Volonté</td>
-                    <td>{{mod[character.personality] + save_bonuses[character.class_][character.level][2]}}</td>
+                    <td>{{mod[character.personality] + level_bonuses[character.class_][character.level][2]}}</td>
+                </tr>
+
+                <tr>
+                    <th scope="col" colspan="2">Bonus</th>
+
+                </tr>
+
+                <tr>
+                    <td>🗡️</td>
+                    <td>{{mod[character.strength] + level_bonuses[character.class_][character.level][3]}}</td>
+                </tr>
+                <tr>
+                    <td>🏹</td>
+                    <td>{{mod[character.agility] + level_bonuses[character.class_][character.level][3]}}</td>
+                </tr>
+
+                {% if character.class_ == "Guerrier" or character.class_ == "Nain" %}
+                <tr>
+                    <td>🎲 HF</td>
+                    <td>{{mighty_deeds.get(character.class_).get(character.level)}}</td>
+                </tr>
+                {% endif %}
+
+                {% if character.class_ == "Mage" %}
+                <tr>
+                    <td>📜</td>
+
+                    <td>{{character.level + mod[character.intelligence]}}</td>
+                </tr>
+                {% elif character.class_ == "Clerc" %}
+                <tr>
+                    <td>{{character.level + mod[character.personality]}}</td>
+                </tr>
+                {% else %}
+
+                {% endif %}
+
+                </tr>
+                <tr>
+                    <th colspan="2">Crits</th>
+                </tr>
+                <tr>
+                    <td>Dés</td>
+                    <td>{{level_bonuses.get(character.class_).get(character.level)[5]}}</td>
+                </tr>
+                <tr>
+                    <td>Table</td>
+                    <td>{{level_bonuses.get(character.class_).get(character.level)[6]}}</td>
                 </tr>
             </table>
         </div>

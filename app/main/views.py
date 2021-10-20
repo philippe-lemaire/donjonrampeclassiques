@@ -19,8 +19,7 @@ from .birthsigns import birthsigns
 from .occupations import occupations
 from .utils import threedsix, ability_modifiers, hit_die
 from .fumbles import fumbles
-from .class_bonuses import save_bonuses
-from app.main import class_bonuses
+from .class_bonuses import level_bonuses, mighty_deeds
 
 
 @main.route("/")
@@ -98,7 +97,7 @@ def create_character():
         character.ac = 10 + ability_modifiers[character.agility]
 
         character.speed = 9
-        if "Nain" or "Halfelin" in character.occupation:
+        if "Nain" in character.occupation or "Halfelin" in character.occupation:
             character.speed = 6
 
         character.init = ability_modifiers[character.agility]
@@ -134,7 +133,8 @@ def character_detail(id):
         "character_detail.html",
         character=character,
         mod=ability_modifiers,
-        save_bonuses=save_bonuses,
+        level_bonuses=level_bonuses,
+        mighty_deeds=mighty_deeds,
     )
 
 
