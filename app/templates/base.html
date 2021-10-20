@@ -37,13 +37,28 @@
                         <a class="nav-link" href="{{url_for('main.my_characters')}}">Mes personnages</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Sorts</a>
+                        <a class="nav-link disabled" href="#">🧙 Sorts</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Mon groupe</a>
+                        <a class="nav-link disabled" href="#">🙏 Prières</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('main.fumbles_list')}}">Maladresses</a>
+                        <a class="nav-link disabled" href="#">🎭 Patrons</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">🕍 Dieux</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">🍵 Poisons</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">🧟 Malédictions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">💥 Critiques</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('main.fumbles_list')}}">🏈 Maladresses</a>
                     </li>
 
                 </ul>
@@ -57,9 +72,7 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{url_for('main.user_page', id=current_user.id)}}">My public
-                                profile</a>
-                            <a class="dropdown-item" href="{{url_for('main.my_profile')}}">Edit my profile</a>
+                            <a class="dropdown-item" href="{{url_for('main.my_profile')}}">Modifier mon compte</a>
 
                             <div class=" dropdown-divider">
                             </div>

@@ -218,9 +218,9 @@ Donjon Rampe Classiques | {{character.name}}
 
 <a class="btn btn-primary" role="button" href="{{url_for('main.edit_character', id=character.id)}}">📝 Modifier</a>
 
-<a class="btn btn-warning" role="button" href="{{url_for('main.level_up_character', id=character.id)}}">💪🏾 Niveau
-    supérieur</a>
+<a class="btn btn-warning" role="button" href="{{url_for('main.level_up_character', id=character.id)}}">💪🏾
+    +1 Niveau</a>
 
-<a class="btn btn-danger" role="button" href="{{url_for('main.delete_character', id=character.id)}}">🗑️ Supprimer</a>
+<a class="btn btn-danger" role="button" href="{{url_for('main.delete_character', id=character.id)}}">⚰️ Tuer</a>
 
 {% endblock %}
