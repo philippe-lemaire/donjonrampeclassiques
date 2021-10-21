@@ -238,8 +238,15 @@ def level_up_character(id):
     if char.level == 0 and char.occupation.split(" ")[0] not in demihumans:
         form = ClassSelectionForm()
         if form.validate_on_submit():
-            char.level += 1
+            # we need to fork to the warrior / dwarf funnel
+            # before leveling up, in case it is interrupted
+            # first assign class
             char.class_ = form.class_.data
+            db.session.commit()
+
+            if char.class_ == "Guerrier":
+                return redirect(url_for("main.select_lucky_weapon", id=char.id))
+            char.level += 1
 
             extra_hp = ability_modifiers[char.stamina] + randint(
                 1, hit_die[char.class_]
@@ -254,14 +261,15 @@ def level_up_character(id):
             flash(
                 f"{char.name} est monté d’un niveau et a gagné {extra_hp} points de vie."
             )
-            if char.class_ == "Guerrier":
-                return redirect(url_for("main.select_lucky_weapon", id=char.id))
 
             return redirect(url_for("main.character_detail", id=char.id))
         return render_template("class_selection.html", form=form)
     # assign race as class for demihumans
     if char.level == 0 and char.occupation.split(" ")[0] in demihumans:
         char.class_ = char.occupation.split(" ")[0]
+        db.session.commit()
+    if char.class_ == "Nain" and char.level == 0:
+        return redirect(url_for("main.select_lucky_weapon", id=char.id))
     # general case level up
     if char.name == "Anonyme":
         char.name = choice(random_names.get(char.class_))
@@ -276,8 +284,7 @@ def level_up_character(id):
     char.hp += extra_hp
     db.session.commit()
     flash(f"{char.name} est monté d’un niveau et a gagné {extra_hp} points de vie.")
-    if char.class_ == "Nain" and char.level == 1:
-        return redirect(url_for("main.select_lucky_weapon", id=char.id))
+
     return redirect(url_for("main.character_detail", id=char.id))
 
 
@@ -289,9 +296,22 @@ def select_lucky_weapon(id):
     char = Character.query.get_or_404(id)
     lucky_weapon_form = LuckyWeaponSelectionForm()
     if lucky_weapon_form.validate_on_submit():
+        # the switch to level 1 happens here, to avoid leveling up
+        # and interrupting the process during lucky weapon choice
+        # only for warriors and dwarves
+        char.level = 1
+        extra_hp = ability_modifiers[char.stamina] + randint(1, hit_die[char.class_])
+        if extra_hp < 1:
+            extra_hp = 1
+        char.hp += extra_hp
+        if char.name == "Anonyme":
+            char.name = choice(random_names.get(char.class_))
+        char.title = titles.get(char.class_).get(char.alignment).get(1)
         char.lucky_weapon = lucky_weapon_form.lucky_weapon.data
         db.session.commit()
-        flash(f"{char.lucky_weapon} sera l’arme chanceuse de {char.name}")
+        flash(
+            f"{char.name} est passé au niveau 1. {char.lucky_weapon} sera son arme chanceuse."
+        )
         return redirect(url_for("main.character_detail", id=char.id))
     return render_template(
         "lucky_weapon_selection.html",
