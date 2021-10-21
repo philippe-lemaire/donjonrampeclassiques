@@ -13,15 +13,15 @@ from ..models import User
 
 class LoginForm(FlaskForm):
     email = StringField("Email", validators=[DataRequired(), Length(1, 128), Email()])
-    password = PasswordField("Password", validators=[DataRequired()])
-    remember_me = BooleanField("Keep me logged in")
-    submit = SubmitField("Log in")
+    password = PasswordField("Mot de passe", validators=[DataRequired()])
+    remember_me = BooleanField("Me laisser identifié·e")
+    submit = SubmitField("M’identifier")
 
 
 class RegistrationForm(FlaskForm):
     email = StringField("Email", validators=[DataRequired(), Length(1, 128), Email()])
     username = StringField(
-        "Username",
+        "Nom d’utilisateur·trice",
         validators=[
             DataRequired(),
             Length(1, 64),
@@ -33,19 +33,21 @@ class RegistrationForm(FlaskForm):
         ],
     )
     password = PasswordField(
-        "Password",
+        "Mot de passe",
         validators=[
             DataRequired(),
             EqualTo("password2", message="Passwords must match."),
         ],
     )
-    password2 = PasswordField("Confirm password", validators=[DataRequired()])
-    submit = SubmitField("Register")
+    password2 = PasswordField(
+        "Répéter le mot de passe, juste pour être sûr·e", validators=[DataRequired()]
+    )
+    submit = SubmitField("Je crée mon compte")
 
     def validate_email(self, field):
         if User.query.filter_by(email=field.data).first():
-            raise ValidationError("Email already registered.")
+            raise ValidationError("Il y a déjà un compte avec cet email.")
 
     def validate_username(self, field):
         if User.query.filter_by(username=field.data).first():
-            raise ValidationError("Username already in use.")
+            raise ValidationError("Il y a déjà un compte avec ce petit nom.")
