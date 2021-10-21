@@ -2,6 +2,7 @@ from datetime import datetime
 from random import randint, choice
 from flask import render_template, redirect, url_for, flash, abort
 from flask_login import login_required, current_user
+from flask_sqlalchemy.model import NameMetaMixin
 from sqlalchemy import desc
 from . import main
 from app.models import User, Character
@@ -245,6 +246,9 @@ def level_up_character(id):
             db.session.commit()
 
             if char.class_ == "Guerrier":
+                # revert to default class_ in case the weapon choice is interrupted
+                char.class_ = "Paysan"
+                db.session.commit()
                 return redirect(url_for("main.select_lucky_weapon", id=char.id))
             char.level += 1
 
@@ -268,7 +272,11 @@ def level_up_character(id):
     if char.level == 0 and char.occupation.split(" ")[0] in demihumans:
         char.class_ = char.occupation.split(" ")[0]
         db.session.commit()
+    # special case for Dwarves
     if char.class_ == "Nain" and char.level == 0:
+        # revert to default class_ in case the weapon choice is interrupted
+        char.class_ = "Paysan"
+        db.session.commit()
         return redirect(url_for("main.select_lucky_weapon", id=char.id))
     # general case level up
     if char.name == "Anonyme":
@@ -300,6 +308,11 @@ def select_lucky_weapon(id):
         # and interrupting the process during lucky weapon choice
         # only for warriors and dwarves
         char.level = 1
+        # assign class_ here to be safer
+        if char.occupation.split(" ")[0] == "Nain":
+            char.class_ = "Nain"
+        else:
+            char.class_ = "Guerrier"
         extra_hp = ability_modifiers[char.stamina] + randint(1, hit_die[char.class_])
         if extra_hp < 1:
             extra_hp = 1
@@ -307,7 +320,7 @@ def select_lucky_weapon(id):
         if char.name == "Anonyme":
             char.name = choice(random_names.get(char.class_))
         char.title = titles.get(char.class_).get(char.alignment).get(1)
-        char.lucky_weapon = lucky_weapon_form.lucky_weapon.data
+        char.lucky_weapon = lucky_weapon_form.lucky_weapon.data.capitalize()
         db.session.commit()
         flash(
             f"{char.name} est passé au niveau 1. {char.lucky_weapon} sera son arme chanceuse."
