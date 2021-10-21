@@ -23,6 +23,7 @@ from .fumbles import fumbles
 from .class_bonuses import level_bonuses, mighty_deeds
 from .random_names import random_names
 from .titles import titles
+from .equipment import equipment
 
 
 @main.route("/")
@@ -67,9 +68,7 @@ def create_character():
         occupation_roll = randint(1, 100)
         character.occupation = occupations[occupation_roll][0]
         character.proficient_weapons = occupations[occupation_roll][1]
-        character.inventory = (
-            f"{occupations[occupation_roll][1]}, {occupations[occupation_roll][2]}"
-        )
+        character.inventory = f"{occupations[occupation_roll][1]}, {occupations[occupation_roll][2]}, {equipment.get(randint(1,24))[0]}"
 
         character.strength = threedsix()
         character.agility = threedsix()
@@ -331,3 +330,15 @@ def select_lucky_weapon(id):
         char=char,
         lucky_weapon_form=lucky_weapon_form,
     )
+
+
+@main.route("/équipement")
+def view_equipment():
+    return render_template("equipment.html", equipment=equipment)
+
+
+@main.route("/équipement/hasard")
+def equipment_roll():
+    roll = randint(1, 24)
+    flash(f"Tu as lancé un {roll}, et obtenu : {equipment.get(roll)[0]}.")
+    return redirect(url_for("main.view_equipment"))
