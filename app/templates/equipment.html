@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}
+Donjon Rampe Classiques | Maladresses
+{% endblock %}
+
+{% block content %}
+<h1>Équipement</h1>
+
+<p>Lors de la création de personnage, lancez un d24 sur cette table et ajoutez l’objet à votre inventaire.
+    <a class="btn btn-primary" role="button" href="{{url_for('main.equipment_roll')}}">
+        🎲 d24</a>
+</p>
+<p>NB : le générateur de personnages de ce site ajoute déjà un objet de cette liste à l’inventaire de tout personnage
+    créé.</p>
+
+<table class="table table-hover table-striped">
+    <thead>
+        <tr>
+            <th scope="col">d24</th>
+            <th scope="col">Objet</th>
+            <th scope="col">Coût</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for die_value, (object, cost) in equipment.items() %}
+        <tr>
+            <td>{{die_value}}</td>
+            <td>{{object}}</td>
+            <td>{{cost}}</td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+
+
+{% endblock %}
