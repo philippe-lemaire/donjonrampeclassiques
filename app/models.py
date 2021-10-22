@@ -52,6 +52,7 @@ class Character(db.Model):
     occupation = db.Column(db.String(128))
     ac = db.Column(db.Integer)
     hp = db.Column(db.Integer)
+    current_hp = db.Column(db.Integer)
     speed = db.Column(db.Integer)
     init = db.Column(db.Integer)
     strength = db.Column(db.Integer)
@@ -73,6 +74,10 @@ class Character(db.Model):
     inventory = db.Column(db.String(128), nullable=True)
     proficient_weapons = db.Column(db.String(128), nullable=True)
     lucky_weapon = db.Column(db.String(64), nullable=True)
+    lucky_spell = db.Column(db.String(64), nullable=True)
+    dead = db.Column(db.Boolean())
+    curses = db.Column(db.String(128), nullable=True)
+    deity = db.Column(db.String(64), nullable=True)
 
 
 @login_manager.user_loader
