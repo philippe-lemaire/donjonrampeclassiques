@@ -20,7 +20,7 @@ from .birthsigns import birthsigns
 from .occupations import occupations
 from .utils import threedsix, ability_modifiers, hit_die
 from .fumbles import fumbles
-from .class_bonuses import level_bonuses, mighty_deeds
+from .class_bonuses import level_bonuses, mighty_deeds, halflin_skills
 from .random_names import random_names
 from .titles import titles
 from .equipment import equipment
@@ -139,6 +139,7 @@ def character_detail(id):
         level_bonuses=level_bonuses,
         mighty_deeds=mighty_deeds,
         titles=titles,
+        halflin_skills=halflin_skills,
     )
 
 

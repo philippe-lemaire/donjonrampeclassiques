@@ -140,7 +140,21 @@ Donjon Rampe Classiques | {{character.name}}
                 </tr>
 
             </table>
-
+            {% if character.class_ == "Halfelin" %}
+            <table class="table table-striped">
+                <tr>
+                    <th colspan="2">Compétences</th>
+                </tr>
+                <tr>
+                    <td>Déplacement silencieux</td>
+                    <td>+{{halflin_skills.get(character.level)}}</td>
+                </tr>
+                <tr>
+                    <td>Se cacher dans l’ombre</td>
+                    <td>+{{halflin_skills.get(character.level)}}</td>
+                </tr>
+            </table>
+            {% endif%}
         </div>
         <div class="col-xs-6"> </div>
         <div class="col-xs-6">
@@ -197,8 +211,10 @@ Donjon Rampe Classiques | {{character.name}}
                 {% endif %}
 
                 </tr>
+            </table>
+            <table class="table table-striped">
                 <tr>
-                    <th colspan="2">Crits</th>
+                    <th colspan=" 2">Crits</th>
                 </tr>
                 <tr>
                     <td>Dés</td>
