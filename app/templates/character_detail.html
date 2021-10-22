@@ -155,6 +155,25 @@ Donjon Rampe Classiques | {{character.name}}
                 </tr>
             </table>
             {% endif%}
+            {% if character.class_ == "Voleur" %}
+            <table class="table table-striped">
+                <tr>
+                    <th colspan="2">Compétences</th>
+                </tr>
+                {% for skill in thieves_skills %}
+                <tr>
+                    <td>{{skill}}</td>
+                    <td>{{thieves_bonuses.get(character.alignment).get(character.level).get(skill)}}</td>
+                </tr>
+                {% endfor %}
+
+            </table>
+            <ul class="list-group">
+                <li class="list-group-item">* Ajouter modificateur d’Agilité
+                <li class="list-group-item">† Ajouter modificateur d’Intelligence</li>
+                <li class="list-group-item">‡ Ajouter modificateur de Présence</li>
+            </ul>
+            {% endif %}
         </div>
         <div class="col-xs-6"> </div>
         <div class="col-xs-6">
