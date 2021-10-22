@@ -221,6 +221,21 @@ def delete_character(id):
     return redirect(url_for("main.my_characters"))
 
 
+@main.route("/ressusciter/personnage/<int:id>")
+@login_required
+def resurect_character(id):
+    char = Character.query.get_or_404(id)
+    if current_user.id != char.user_id:
+        abort(403)
+    if char.dead:
+        char.dead = False
+        db.session.commit()
+        flash(f"{char.name} a été ressuscité·e.")
+    else:
+        flash(f"{char.name} n’était même pas mort·e.")
+    return redirect(url_for("main.my_characters"))
+
+
 @main.route("/maladresses")
 def fumbles_list():
     return render_template("fumbles.html", fumbles=fumbles.items())
