@@ -49,7 +49,7 @@ class CharacterEditForm(FlaskForm):
     title = StringField(label="Titre", render_kw={"readonly": True})
     occupation = StringField(label="Occupation", render_kw={"readonly": True})
     ac = IntegerField(label="CA", render_kw={"readonly": True})
-    hp = IntegerField(label="PV", render_kw={"readonly": True})
+    hp = IntegerField(label="PV")
     speed = IntegerField(label="Vitesse", render_kw={"readonly": True})
     init = IntegerField(label="Init", render_kw={"readonly": True})
     strength = IntegerField(label="Force")
