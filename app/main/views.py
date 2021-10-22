@@ -81,6 +81,7 @@ def create_character():
         if character.hp < 1:
             character.hp = 1
 
+        character.current_hp = character.hp
         character.reflex = ability_modifiers[character.agility]
         character.fortitude = ability_modifiers[character.stamina]
         character.will = ability_modifiers[character.personality]
@@ -162,7 +163,7 @@ def edit_character(id):
         character.intelligence = form.intelligence.data
         character.luck = form.luck.data
         character.alignment = form.alignment.data
-
+        character.current_hp = form.hp.data
         character.languages = form.languages.data
         character.patron = form.patron.data
         character.inventory = form.inventory.data
@@ -178,7 +179,7 @@ def edit_character(id):
     form.title.data = character.title
     form.occupation.data = character.occupation
     form.ac.data = character.ac
-    form.hp.data = character.hp
+    form.hp.data = character.current_hp
     form.speed.data = character.speed
     form.init.data = character.init
     form.strength.data = character.strength
@@ -291,6 +292,7 @@ def level_up_character(id):
             if extra_hp < 1:
                 extra_hp = 1
             char.hp += extra_hp
+            char.current_up += extra_hp
             if char.name == "Anonyme":
                 char.name = choice(random_names.get(char.class_))
             char.title = titles.get(char.class_).get(char.alignment).get(1)
@@ -322,6 +324,7 @@ def level_up_character(id):
     extra_hp = ability_modifiers[char.stamina] + randint(1, hit_die[char.class_])
     if extra_hp < 1:
         extra_hp = 1
+    char.current_hp += extra_hp
     char.hp += extra_hp
     db.session.commit()
     flash(f"{char.name} est monté d’un niveau et a gagné {extra_hp} points de vie.")
@@ -350,6 +353,7 @@ def select_lucky_weapon(id):
         if extra_hp < 1:
             extra_hp = 1
         char.hp += extra_hp
+        char.current_hp += extra_hp
         if char.name == "Anonyme":
             char.name = choice(random_names.get(char.class_))
         char.title = titles.get(char.class_).get(char.alignment).get(1)
