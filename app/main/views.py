@@ -20,7 +20,14 @@ from .birthsigns import birthsigns
 from .occupations import occupations
 from .utils import threedsix, ability_modifiers, hit_die
 from .fumbles import fumbles
-from .class_bonuses import level_bonuses, mighty_deeds, halflin_skills
+from .class_bonuses import (
+    level_bonuses,
+    mighty_deeds,
+    halflin_skills,
+    thieves_bonuses,
+    thieves_skills,
+    luck_die,
+)
 from .random_names import random_names
 from .titles import titles
 from .equipment import equipment
@@ -94,11 +101,8 @@ def create_character():
         character.init = ability_modifiers[character.agility]
         character.alignment = characterform.alignment.data
         character.birthsign, character.birthsign_effect = birthsigns[randint(1, 30)]
-        character.languages = str(
-            [
-                "Commun",
-            ]
-        )
+        character.languages = "Commun"
+
         character.last_updated = datetime.utcnow()
         character.patron = ""
         character.spells_known = str([])
@@ -140,6 +144,9 @@ def character_detail(id):
         mighty_deeds=mighty_deeds,
         titles=titles,
         halflin_skills=halflin_skills,
+        thieves_bonuses=thieves_bonuses,
+        thieves_skills=thieves_skills,
+        luck_die=luck_die,
     )
 
 
@@ -285,6 +292,9 @@ def level_up_character(id):
                 char.class_ = "Paysan"
                 db.session.commit()
                 return redirect(url_for("main.select_lucky_weapon", id=char.id))
+            if char.class_ == "Voleur":
+                char.languages = f"{char.languages}, Argot des Voleurs"
+
             char.level += 1
 
             extra_hp = ability_modifiers[char.stamina] + randint(
@@ -293,7 +303,7 @@ def level_up_character(id):
             if extra_hp < 1:
                 extra_hp = 1
             char.hp += extra_hp
-            char.current_up += extra_hp
+            char.current_hp += extra_hp
             if char.name == "Anonyme":
                 char.name = choice(random_names.get(char.class_))
             char.title = titles.get(char.class_).get(char.alignment).get(1)
