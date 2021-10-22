@@ -558,3 +558,16 @@ for level in range(1, 11):
     thieves_bonuses["Chaotique"][level] = {
         k: v for k, v in zip(thieves_skills, thieves_chaotic_bonuses[level - 1])
     }
+
+luck_die = {
+    1: "d3",
+    2: "d4",
+    3: "d5",
+    4: "d6",
+    5: "d7",
+    6: "d8",
+    7: "d10",
+    8: "d12",
+    9: "d14",
+    10: "d16",
+}

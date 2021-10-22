@@ -96,6 +96,12 @@ Donjon Rampe Classiques | {{character.name}}
                     <td>🎲 d’action</td>
                     <td>{{level_bonuses.get(character.class_).get(character.level)[4]}}</td>
                 </tr>
+                {% if character.class_ == "Voleur" %}
+                <tr>
+                    <td>🎲 de chance</td>
+                    <td>{{luck_die.get(character.level)}}</td>
+                </tr>
+                {% endif %}
 
             </table>
 

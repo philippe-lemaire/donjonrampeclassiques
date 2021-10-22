@@ -26,6 +26,7 @@ from .class_bonuses import (
     halflin_skills,
     thieves_bonuses,
     thieves_skills,
+    luck_die,
 )
 from .random_names import random_names
 from .titles import titles
@@ -148,6 +149,7 @@ def character_detail(id):
         halflin_skills=halflin_skills,
         thieves_bonuses=thieves_bonuses,
         thieves_skills=thieves_skills,
+        luck_die=luck_die,
     )
 
 
