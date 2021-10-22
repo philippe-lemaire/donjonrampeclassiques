@@ -101,6 +101,7 @@ def create_character():
         character.last_updated = datetime.utcnow()
         character.patron = ""
         character.spells_known = str([])
+        character.dead = False
         db.session.add(character)
         db.session.commit()
         flash(f"{character.name} a été créé.")
@@ -111,7 +112,18 @@ def create_character():
 @main.route("/mes_personnages")
 @login_required
 def my_characters():
-    characters = Character.query.filter_by(user_id=current_user.id).all()
+    characters = (
+        Character.query.filter_by(user_id=current_user.id).filter_by(dead=False).all()
+    )
+    return render_template("my_characters.html", characters=characters)
+
+
+@main.route("/mes_personnages/décédés")
+@login_required
+def my_dead_characters():
+    characters = (
+        Character.query.filter_by(user_id=current_user.id).filter_by(dead=True).all()
+    )
     return render_template("my_characters.html", characters=characters)
 
 
@@ -196,9 +208,31 @@ def delete_character(id):
     char = Character.query.get_or_404(id)
     if current_user.id != char.user_id:
         abort(403)
-    db.session.delete(char)
-    db.session.commit()
-    flash(f"{char.name} a été supprimé. Paix à son âme…")
+    if char.dead:
+        db.session.delete(char)
+        db.session.commit()
+        flash(f"{char.name} a été supprimé·e. Paix à son âme…")
+    else:
+        char.dead = True
+        db.session.commit()
+        flash(
+            f"{char.name} est tombé·e en combat. Mais avec un peu de chance il ou elle peut ressusciter."
+        )
+    return redirect(url_for("main.my_characters"))
+
+
+@main.route("/ressusciter/personnage/<int:id>")
+@login_required
+def resurect_character(id):
+    char = Character.query.get_or_404(id)
+    if current_user.id != char.user_id:
+        abort(403)
+    if char.dead:
+        char.dead = False
+        db.session.commit()
+        flash(f"{char.name} a été ressuscité·e.")
+    else:
+        flash(f"{char.name} n’était même pas mort·e.")
     return redirect(url_for("main.my_characters"))
 
 
