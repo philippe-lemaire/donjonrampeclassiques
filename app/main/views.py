@@ -101,11 +101,8 @@ def create_character():
         character.init = ability_modifiers[character.agility]
         character.alignment = characterform.alignment.data
         character.birthsign, character.birthsign_effect = birthsigns[randint(1, 30)]
-        character.languages = str(
-            [
-                "Commun",
-            ]
-        )
+        character.languages = "Commun"
+
         character.last_updated = datetime.utcnow()
         character.patron = ""
         character.spells_known = str([])
@@ -295,6 +292,9 @@ def level_up_character(id):
                 char.class_ = "Paysan"
                 db.session.commit()
                 return redirect(url_for("main.select_lucky_weapon", id=char.id))
+            if char.class_ == "Voleur":
+                char.languages = f"{char.languages}, Argot des Voleurs"
+
             char.level += 1
 
             extra_hp = ability_modifiers[char.stamina] + randint(
