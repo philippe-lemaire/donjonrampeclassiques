@@ -13,7 +13,6 @@ from wtforms import (
 )
 from wtforms.fields.core import IntegerField
 from wtforms.validators import DataRequired, Length, Email, Regexp, EqualTo, Optional
-from app.models import User
 
 
 class ProfileForm(FlaskForm):
@@ -33,8 +32,13 @@ class CharacterCreationForm(FlaskForm):
     name = StringField(
         "Nom du personnage, laisser vide pour un nom aléatoire, qui sera attribué au niveau 1."
     )
+
+    submit = SubmitField("Montjoie !")
+
+
+class AlignmentForm(FlaskForm):
     alignment = RadioField(
-        label="Choisissez votre alignement", choices=["Chaotique", "Neutre", "Loyal"]
+        label="Choisissez votre alignement", choices=["Loyal", "Neutre", "Chaotique"]
     )
     submit = SubmitField("Montjoie !")
 
