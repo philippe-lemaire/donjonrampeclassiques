@@ -13,6 +13,7 @@ from .forms import (
     CharacterEditForm,
     ClassSelectionForm,
     LuckyWeaponSelectionForm,
+    DeityForm,
 )
 from werkzeug.utils import secure_filename
 from os import path
@@ -106,6 +107,7 @@ def create_character():
 
         character.last_updated = datetime.utcnow()
         character.patron = ""
+        character.deity = ""
         character.spells_known = str([])
         character.dead = False
         db.session.add(character)
@@ -147,10 +149,28 @@ def choose_alignment(id):
     return render_template("choose_alignment.html", form=form, char=char)
 
 
+@main.route("/mes_personnages/choisir_divinity/<int:id>", methods=["GET", "POST"])
+@login_required
+def choose_deity(id):
+    char = Character.query.get_or_404(id)
+    if current_user.id != char.user_id:
+        abort(403)
+    form = DeityForm()
+    if form.validate_on_submit():
+        char.deity = form.deity.data
+        db.session.commit()
+        return redirect(url_for("main.character_detail", id=char.id))
+    return render_template("choose_deity.html", form=form, char=char)
+
+
 @main.route("/mes_personnages/<int:id>")
 @login_required
 def character_detail(id):
     character = Character.query.get_or_404(id)
+    if current_user.id != character.user_id:
+        abort(403)
+    if character.class_ == "Clerc" and not character.deity:
+        return redirect(url_for("main.choose_deity", id=character.id))
 
     return render_template(
         "character_detail.html",
@@ -191,6 +211,7 @@ def edit_character(id):
         character.languages = form.languages.data
         character.patron = form.patron.data
         character.inventory = form.inventory.data
+        character.deity = form.deity.data
         flash(f"{character.name} a été modifié…")
         db.session.commit()
         return redirect(url_for("main.character_detail", id=character.id))
@@ -223,6 +244,7 @@ def edit_character(id):
     form.spells_known.data = character.spells_known
     form.inventory.data = character.inventory
     form.proficient_weapons.data = character.proficient_weapons
+    form.deity.data = character.deity
 
     return render_template("edit_character.html", character=character, form=form)
 

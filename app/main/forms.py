@@ -43,6 +43,16 @@ class AlignmentForm(FlaskForm):
     submit = SubmitField("Montjoie !")
 
 
+class DeityForm(FlaskForm):
+    deity = StringField(
+        label="Choisissez votre divinité",
+        validators=[
+            DataRequired(),
+        ],
+    )
+    submit = SubmitField("Montjoie !")
+
+
 class CharacterEditForm(FlaskForm):
     name = StringField(label="Nom")
 
@@ -69,7 +79,8 @@ class CharacterEditForm(FlaskForm):
     birthsign = StringField(label="Naissance", render_kw={"readonly": True})
     birthsign_effect = StringField(label="Jet chanceux", render_kw={"readonly": True})
     languages = StringField(label="Langues")
-    patron = StringField(label="Patron", render_kw={"readonly": True})
+    patron = StringField(label="Patron")
+    deity = StringField(label="Divinité")
     spells_known = StringField(label="Sorts Connus")
     inventory = StringField(label="Inventaire")
     proficient_weapons = StringField(label="Armes maîtrisées")

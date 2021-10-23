@@ -193,6 +193,15 @@ Donjon Rampe Classiques | {{character.name}}
                 <tr>
                     <td>{{character.spells_known}}</td>
                 </tr>
+                {% if character.class_ == "Clerc" %}
+                <tr>
+                    <th>Divinité</th>
+
+                </tr>
+                <tr>
+                    <td>{{character.deity}}</td>
+                </tr>
+                {% endif %}
 
             </table>
             {% endif %}
