@@ -32,6 +32,7 @@ from .class_bonuses import (
 from .random_names import random_names
 from .titles import titles
 from .equipment import equipment
+from .spells import wizard_spells
 
 
 @main.route("/")
@@ -411,3 +412,8 @@ def equipment_roll():
     roll = randint(1, 24)
     flash(f"Tu as lancé un {roll}, et obtenu : {equipment.get(roll)[0]}.")
     return redirect(url_for("main.view_equipment"))
+
+
+@main.route("/sorts")
+def view_wizard_spells():
+    return render_template("view_wizard_spells.html", spells=wizard_spells)
