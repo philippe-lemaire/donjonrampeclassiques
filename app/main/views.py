@@ -1,5 +1,5 @@
 from datetime import datetime
-from random import randint, choice
+from random import randint, choice, sample
 from flask import render_template, redirect, url_for, flash, abort
 from flask_login import login_required, current_user
 from flask_sqlalchemy.model import NameMetaMixin
@@ -32,7 +32,7 @@ from .class_bonuses import (
 from .random_names import random_names
 from .titles import titles
 from .equipment import equipment
-from .spells import wizard_spells
+from .spells import wizard_spells, cleric_spells
 
 
 @main.route("/")
@@ -316,6 +316,20 @@ def level_up_character(id):
 
             char.level += 1
 
+            if char.class_ == "Mage":
+                k = 4 + ability_modifiers[char.intelligence]
+                if k < 1:
+                    k = 1
+                char.spells_known = ", ".join(
+                    sample(population=wizard_spells.get(1)[:-1], k=k)
+                )
+
+            if char.class_ == "Clerc":
+                k = 4
+                char.spells_known = ", ".join(
+                    sample(population=cleric_spells.get(1), k=k)
+                )
+
             extra_hp = ability_modifiers[char.stamina] + randint(
                 1, hit_die[char.class_]
             )
@@ -349,6 +363,12 @@ def level_up_character(id):
     if char.name == "Anonyme":
         char.name = choice(random_names.get(char.class_))
     char.level += 1
+    if char.level == 1 and char.class_ == "Elfe":
+        k = 3
+        char.spells_known = ", ".join(
+            sample(population=wizard_spells.get(1)[:-3], k=k)
+            + wizard_spells.get(1)[-3:-1]
+        )
     title_level = char.level
     if title_level > 5:
         title_level = 5
@@ -417,3 +437,8 @@ def equipment_roll():
 @main.route("/sorts")
 def view_wizard_spells():
     return render_template("view_wizard_spells.html", spells=wizard_spells)
+
+
+@main.route("/prières")
+def view_cleric_spells():
+    return render_template("view_cleric_spells.html", spells=cleric_spells)

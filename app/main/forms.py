@@ -70,7 +70,7 @@ class CharacterEditForm(FlaskForm):
     birthsign_effect = StringField(label="Jet chanceux", render_kw={"readonly": True})
     languages = StringField(label="Langues")
     patron = StringField(label="Patron", render_kw={"readonly": True})
-    spells_known = StringField(label="Sorts Connus", render_kw={"readonly": True})
+    spells_known = StringField(label="Sorts Connus")
     inventory = StringField(label="Inventaire")
     proficient_weapons = StringField(label="Armes maîtrisées")
 

@@ -10,9 +10,7 @@ w1 = [
     "Détection de la magie*",
     "Feuille morte",
     "Invocation d’animaux",
-    "Invoquer un patron**",
     "Lecture de la magie",
-    "Lier un patron**",
     "Mains brûlantes",
     "Masque mystique d’Ekim",
     "Mur de force",
@@ -25,6 +23,8 @@ w1 = [
     "Sommeil",
     "Tour de magie",
     "Ventriloquie",
+    "Invoquer un patron**",
+    "Lier un patron**",
     "(Sort de Patron)***",
 ]
 
@@ -98,5 +98,56 @@ w5 = [
     "Rempart magique",
 ]
 
+c1 = [
+    "Bénédiction",
+    "Détection de la magie",
+    "Détection du mal",
+    "Divination",
+    "Injonction",
+    "Nourriture divine",
+    "Paralysie",
+    "Protection contre le mal",
+    "Résistance au froid ou à la chaleur",
+    "Sanctuaire",
+    "Ténèbres",
+]
+
+c2 = [
+    "Bannissement",
+    "Charme-serpent",
+    "Guérison de la paralysie",
+    "Malédiction",
+    "Malédiction du bois",
+    "Neutralisation du poison et des maladies",
+    "Pierre venimeuse",
+    "Restauration de la vitalité",
+    "Soumission",
+    "Symbole divin",
+    "Transe du lotus",
+]
+
+c3 = [
+    "Animation des morts",
+    "Arme spirituelle",
+    "Désenvoûtement",
+    "Éclair divin",
+    "Entretien avec les morts",
+    "Exorcisme",
+    "Nom secret",
+]
+
+c4 = [
+    "Calamité des dieux",
+    "Consacrer/ Déconsacrer",
+    "Infestation",
+    "Séisme",
+]
+
+c5 = [
+    "Contrôle du climat",
+    "Flammes du juste",
+    "Tourbillon de lames",
+]
 
 wizard_spells = {k: v for k, v in zip(range(1, 6), [w1, w2, w3, w4, w5])}
+cleric_spells = {k: v for k, v in zip(range(1, 6), [c1, c2, c3, c4, c5])}
