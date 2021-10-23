@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form %}
+
+{% block title %}
+Donjon Rampe Classiques | Choisissez la Divinité servie par {{ char.name }}
+{% endblock %}
+
+{% block content %}
+<h1>Choisissez la Divinité servie par {{ char.name }}</h1>
+<br>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{url_for('main.index')}}">Taverne</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Choisissez la Divinité servie par {{ char.name }}</li>
+    </ol>
+</nav>
+<br>
+{{ render_form(form) }}
+{% endblock %}

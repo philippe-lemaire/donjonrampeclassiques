@@ -112,7 +112,7 @@ Donjon Rampe Classiques | {{character.name}}
         </div>
         <div class="col-xs-6"> </div>
         <div class="col-xs-6">
-            <table class="table table-striped">
+            <table class="table table-striped" style="width: 250px">
                 <tr>
                     <th scope="col">Caractéristique</th>
                     <th scope="col">Valeur</th>
@@ -151,7 +151,7 @@ Donjon Rampe Classiques | {{character.name}}
 
             </table>
             {% if character.class_ == "Halfelin" %}
-            <table class="table table-striped">
+            <table class="table table-striped" style="width: 250px">
                 <tr>
                     <th colspan="2">Compétences</th>
                 </tr>
@@ -166,7 +166,7 @@ Donjon Rampe Classiques | {{character.name}}
             </table>
             {% endif%}
             {% if character.class_ == "Voleur" %}
-            <table class="table table-striped">
+            <table class="table table-striped" style="width: 250px">
                 <tr>
                     <th colspan="2">Compétences</th>
                 </tr>
@@ -183,6 +183,27 @@ Donjon Rampe Classiques | {{character.name}}
                 <li class="list-group-item">† Ajouter modificateur d’Intelligence</li>
                 <li class="list-group-item">‡ Ajouter modificateur de Présence</li>
             </ul>
+            {% endif %}
+            {% if character.class_ == "Mage" or character.class_ == "Elfe" or character.class_ == "Clerc" %}
+            <table class="table table-striped" style="width: 250px">
+                <tr>
+                    <th>Sorts connus</th>
+
+                </tr>
+                <tr>
+                    <td>{{character.spells_known}}</td>
+                </tr>
+                {% if character.class_ == "Clerc" %}
+                <tr>
+                    <th>Divinité</th>
+
+                </tr>
+                <tr>
+                    <td>{{character.deity}}</td>
+                </tr>
+                {% endif %}
+
+            </table>
             {% endif %}
         </div>
         <div class="col-xs-6"> </div>
