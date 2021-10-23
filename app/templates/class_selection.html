@@ -6,7 +6,7 @@ Donjon Rampe Classiques | Choisir une classe
 {% endblock %}
 
 {% block content %}
-<h1>Choisir une classe</h1>
+<h1>Choisir une classe pour {{character.name}}</h1>
 <br>
 
 <nav aria-label="breadcrumb">
@@ -15,6 +15,53 @@ Donjon Rampe Classiques | Choisir une classe
         <li class="breadcrumb-item active" aria-current="page">Choisir une classe</li>
     </ol>
 </nav>
-<br>
-{{ render_form(form) }}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <table class="table table-striped">
+                <tr>
+                    <th scope="col">Caractéristique</th>
+                    <th scope="col">Valeur</th>
+                    <th scope="col">Mod</th>
+                </tr>
+                <tr>
+                    <td>Force</td>
+                    <td>{{character.strength}}</td>
+                    <td>{{mod[character.strength]}}</td>
+                </tr>
+                <tr>
+                    <td>Agilité</td>
+                    <td>{{character.agility}}</td>
+                    <td>{{mod[character.agility]}}</td>
+                </tr>
+                <tr>
+                    <td>Endurance</td>
+                    <td>{{character.stamina}}</td>
+                    <td>{{mod[character.stamina]}}</td>
+                </tr>
+                <tr>
+                    <td>Présence</td>
+                    <td>{{character.personality}}</td>
+                    <td>{{mod[character.personality]}}</td>
+                </tr>
+                <tr>
+                    <td>Intelligence</td>
+                    <td>{{character.intelligence}}</td>
+                    <td>{{mod[character.intelligence]}}</td>
+                </tr>
+                <tr>
+                    <td>Chance</td>
+                    <td>{{character.luck}}</td>
+                    <td>{{mod[character.luck]}}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-sm">{{ render_form(form) }}</div>
+
+
+    </div>
+</div>
+
 {% endblock %}

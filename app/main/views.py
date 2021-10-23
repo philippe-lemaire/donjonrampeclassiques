@@ -142,16 +142,15 @@ def choose_alignment(id):
     if form.validate_on_submit():
         char.alignment = form.alignment.data
         db.session.commit()
-        return redirect(url_for("main.character_detail", id=char.id))
-    return render_template("choose_alignment.html", form=form)
+        return redirect(url_for("main.level_up_character", id=char.id))
+    return render_template("choose_alignment.html", form=form, char=char)
 
 
 @main.route("/mes_personnages/<int:id>")
 @login_required
 def character_detail(id):
     character = Character.query.get_or_404(id)
-    if not character.alignment:
-        return redirect(url_for("main.choose_alignment", id=character.id))
+
     return render_template(
         "character_detail.html",
         character=character,
@@ -287,6 +286,9 @@ def level_up_character(id):
     # check user owns the character
     if current_user.id != char.user_id:
         abort(403)
+    # check if alignment is not set yet
+    if not char.alignment:
+        return redirect(url_for("main.choose_alignment", id=char.id))
     # check the character hasn't reached max level 10
     if char.level >= 10:
         flash("Ce personnage a atteint son niveau maximum, espèce de munchkin.")
@@ -329,7 +331,9 @@ def level_up_character(id):
             )
 
             return redirect(url_for("main.character_detail", id=char.id))
-        return render_template("class_selection.html", form=form)
+        return render_template(
+            "class_selection.html", form=form, character=char, mod=ability_modifiers
+        )
     # assign race as class for demihumans
     if char.level == 0 and char.occupation.split(" ")[0] in demihumans:
         char.class_ = char.occupation.split(" ")[0]

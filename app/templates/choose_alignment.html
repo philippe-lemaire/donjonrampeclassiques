@@ -2,17 +2,17 @@
 {% from 'bootstrap/form.html' import render_form %}
 
 {% block title %}
-Donjon Rampe Classiques | Choisissez l’alignement
+Donjon Rampe Classiques | Choisissez l’alignement de {{ char.name }}
 {% endblock %}
 
 {% block content %}
-<h1>Choisissez l’alignement</h1>
+<h1>Choisissez l’alignement de {{ char.name }}</h1>
 <br>
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{url_for('main.index')}}">Taverne</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Choisissez l’alignement</li>
+        <li class="breadcrumb-item active" aria-current="page">Choisissez l’alignement de {{ char.name }}</li>
     </ol>
 </nav>
 <br>
