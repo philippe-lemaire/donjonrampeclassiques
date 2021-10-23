@@ -12,6 +12,7 @@ Donjon Rampe Classiques | Mes personnages
         <tr>
             <th scope="col">#</th>
             <th scope="col">Nom</th>
+            <th scope="col">Alignement</th>
             <th scope="col">Classe</th>
             <th scope="col">Niveau</th>
             <th scope='col'>PV</th>
@@ -26,6 +27,7 @@ Donjon Rampe Classiques | Mes personnages
         <tr>
             <th scope="row">{{ loop.index }}</th>
             <td><a href="{{url_for('main.character_detail', id=char.id)}}">{{char.name}}</a></td>
+            <td>{{char.alignment}}</td>
             <td>{{char.class_}}</td>
             <td>{{char.level}}</td>
             <td>{{char.hp}}</td>

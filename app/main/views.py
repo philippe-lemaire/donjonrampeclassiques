@@ -7,6 +7,7 @@ from sqlalchemy import desc
 from . import main
 from app.models import User, Character
 from .forms import (
+    AlignmentForm,
     ProfileForm,
     CharacterCreationForm,
     CharacterEditForm,
@@ -99,7 +100,6 @@ def create_character():
             character.speed = 6
 
         character.init = ability_modifiers[character.agility]
-        character.alignment = characterform.alignment.data
         character.birthsign, character.birthsign_effect = birthsigns[randint(1, 30)]
         character.languages = "Commun"
 
@@ -132,10 +132,25 @@ def my_dead_characters():
     return render_template("my_characters.html", characters=characters)
 
 
+@main.route("/mes_personnages/choisir_alignement/<int:id>", methods=["GET", "POST"])
+@login_required
+def choose_alignment(id):
+    char = Character.query.get_or_404(id)
+    if current_user.id != char.user_id:
+        abort(403)
+    form = AlignmentForm()
+    if form.validate_on_submit():
+        char.alignment = form.alignment.data
+        db.session.commit()
+        return redirect(url_for("main.level_up_character", id=char.id))
+    return render_template("choose_alignment.html", form=form, char=char)
+
+
 @main.route("/mes_personnages/<int:id>")
 @login_required
 def character_detail(id):
     character = Character.query.get_or_404(id)
+
     return render_template(
         "character_detail.html",
         character=character,
@@ -271,6 +286,9 @@ def level_up_character(id):
     # check user owns the character
     if current_user.id != char.user_id:
         abort(403)
+    # check if alignment is not set yet
+    if not char.alignment:
+        return redirect(url_for("main.choose_alignment", id=char.id))
     # check the character hasn't reached max level 10
     if char.level >= 10:
         flash("Ce personnage a atteint son niveau maximum, espèce de munchkin.")
@@ -313,7 +331,9 @@ def level_up_character(id):
             )
 
             return redirect(url_for("main.character_detail", id=char.id))
-        return render_template("class_selection.html", form=form)
+        return render_template(
+            "class_selection.html", form=form, character=char, mod=ability_modifiers
+        )
     # assign race as class for demihumans
     if char.level == 0 and char.occupation.split(" ")[0] in demihumans:
         char.class_ = char.occupation.split(" ")[0]
