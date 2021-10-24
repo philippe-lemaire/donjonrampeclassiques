@@ -102,7 +102,18 @@ def create_character():
             character.speed = 6
 
         character.init = ability_modifiers[character.agility]
-        character.birthsign, character.birthsign_effect = birthsigns[randint(1, 30)]
+        birth_sign_roll = randint(1, 30)
+        character.birthsign = birthsigns[birth_sign_roll][0]
+        luck_mod = ability_modifiers[character.luck]
+        if luck_mod >= 0:
+            character.birthsign_effect = (
+                f"{birthsigns[birth_sign_roll][1]} (+{luck_mod})"
+            )
+        else:
+            character.birthsign_effect = (
+                f"{birthsigns[birth_sign_roll][1]} ({luck_mod})"
+            )
+
         character.languages = "Commun"
 
         character.last_updated = datetime.utcnow()
