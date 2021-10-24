@@ -112,7 +112,7 @@ def create_character():
         character.dead = False
         db.session.add(character)
         db.session.commit()
-        flash(f"{character.name} a été créé.")
+        flash(f"{character.name} a été créé.", "success")
         return redirect(url_for("main.my_characters"))
     return render_template("create_character.html", characterform=characterform)
 
@@ -212,7 +212,7 @@ def edit_character(id):
         character.patron = form.patron.data
         character.inventory = form.inventory.data
         character.deity = form.deity.data
-        flash(f"{character.name} a été modifié…")
+        flash(f"{character.name} a été modifié…", "success")
         db.session.commit()
         return redirect(url_for("main.character_detail", id=character.id))
     # Create and fill in the form
@@ -258,12 +258,13 @@ def delete_character(id):
     if char.dead:
         db.session.delete(char)
         db.session.commit()
-        flash(f"{char.name} a été supprimé·e. Paix à son âme…")
+        flash(f"{char.name} a été supprimé·e. Paix à son âme…", "danger")
     else:
         char.dead = True
         db.session.commit()
         flash(
-            f"{char.name} est tombé·e en combat. Mais avec un peu de chance il ou elle peut ressusciter."
+            f"{char.name} est tombé·e en combat. Mais avec un peu de chance il ou elle peut ressusciter.",
+            "warning",
         )
     return redirect(url_for("main.my_characters"))
 
@@ -277,9 +278,9 @@ def resurect_character(id):
     if char.dead:
         char.dead = False
         db.session.commit()
-        flash(f"{char.name} a été ressuscité·e.")
+        flash(f"{char.name} a été ressuscité·e.", "success")
     else:
-        flash(f"{char.name} n’était même pas mort·e.")
+        flash(f"{char.name} n’était même pas mort·e.", "danger")
     return redirect(url_for("main.my_characters"))
 
 
@@ -297,7 +298,8 @@ def fumble_roll(die):
         roll = 16
 
     flash(
-        f"Tu as lancé un {roll}. Pense à ajuster en soustrayant to modificateur de chance."
+        f"Tu as lancé un {roll}. Pense à ajuster en soustrayant to modificateur de chance.",
+        "warning",
     )
     return redirect(url_for("main.fumbles_list"))
 
@@ -314,7 +316,9 @@ def level_up_character(id):
         return redirect(url_for("main.choose_alignment", id=char.id))
     # check the character hasn't reached max level 10
     if char.level >= 10:
-        flash("Ce personnage a atteint son niveau maximum, espèce de munchkin.")
+        flash(
+            "Ce personnage a atteint son niveau maximum, espèce de munchkin.", "danger"
+        )
         return redirect(url_for("main.character_detail", id=char.id))
     # check if its the first level up and char is human
     demihumans = ["Nain", "Elfe", "Halfelin"]
@@ -364,7 +368,8 @@ def level_up_character(id):
             char.title = titles.get(char.class_).get(char.alignment).get(1)
             db.session.commit()
             flash(
-                f"{char.name} est monté d’un niveau et a gagné {extra_hp} points de vie."
+                f"{char.name} est monté d’un niveau et a gagné {extra_hp} points de vie.",
+                "success",
             )
 
             return redirect(url_for("main.character_detail", id=char.id))
@@ -401,7 +406,10 @@ def level_up_character(id):
     char.current_hp += extra_hp
     char.hp += extra_hp
     db.session.commit()
-    flash(f"{char.name} est monté d’un niveau et a gagné {extra_hp} points de vie.")
+    flash(
+        f"{char.name} est monté d’un niveau et a gagné {extra_hp} points de vie.",
+        "success",
+    )
 
     return redirect(url_for("main.character_detail", id=char.id))
 
@@ -434,7 +442,8 @@ def select_lucky_weapon(id):
         char.lucky_weapon = lucky_weapon_form.lucky_weapon.data.capitalize()
         db.session.commit()
         flash(
-            f"{char.name} est passé au niveau 1. {char.lucky_weapon} sera son arme chanceuse."
+            f"{char.name} est passé au niveau 1. {char.lucky_weapon} sera son arme chanceuse.",
+            "success",
         )
         return redirect(url_for("main.character_detail", id=char.id))
     return render_template(
@@ -452,7 +461,7 @@ def view_equipment():
 @main.route("/équipement/hasard")
 def equipment_roll():
     roll = randint(1, 24)
-    flash(f"Tu as lancé un {roll}, et obtenu : {equipment.get(roll)[0]}.")
+    flash(f"Tu as lancé un {roll}, et obtenu : {equipment.get(roll)[0]}.", "info")
     return redirect(url_for("main.view_equipment"))
 
 
