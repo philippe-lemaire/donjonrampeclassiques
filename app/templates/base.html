@@ -31,45 +31,47 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('main.create_character')}}">Créer un personnage</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('main.my_characters')}}">Mes personnages</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('main.my_dead_characters')}}">Cimetière</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('main.view_equipment')}}">🛒 Équipements</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('main.view_wizard_spells')}}">🧙 Sorts</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('main.view_cleric_spells')}}">🙏 Prières</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#">🎭 Patrons</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#">🕍 Dieux</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#">🍵 Poisons</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#">🧟 Malédictions</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#">💥 Critiques</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('main.fumbles_list')}}">🏈 Maladresses</a>
-                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Personnages</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
+                            <a class="dropdown-item" href="{{url_for('main.create_character')}}">Créer un personnage</a>
+                            <a class="dropdown-item" href="{{url_for('main.my_characters')}}">Mes personnages</a>
+                            <a class="dropdown-item" href="{{url_for('main.my_dead_characters')}}">Cimetière</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">🛒 Équipement</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{url_for('main.view_equipment')}}">🎒 Objets</a>
+                            <a class="dropdown-item disabled" href="#">🍵 Poisons</a>
+
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">🔮 Magie</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                            <a class="dropdown-item" href="{{url_for('main.view_wizard_spells')}}">🧙 Sorts</a>
+                            <a class="dropdown-item" href="{{url_for('main.view_cleric_spells')}}">🙏 Prières</a>
+                            <a class="dropdown-item disabled" href="#">🎭 Patrons</a>
+                            <a class="dropdown-item disabled" href="#">🕍 Dieux</a>
+                            <a class="dropdown-item disabled" href="#">🧟 Malédictions</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">🎲 Tables critiques</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item disabled" href="#">💥 Critiques</a>
+                            <a class="dropdown-item" href="{{url_for('main.fumbles_list')}}">🏈 Maladresses</a>
+                        </div>
+
+                    </li>
                 </ul>
-
                 <ul class="navbar-nav">
                     {% if current_user.is_authenticated %}
                     <li class="nav-item dropdown">
@@ -92,7 +94,6 @@
                                 class="sr-only">(current)</span></a>
                     </li>
                     {% endif %}
-
                 </ul>
             </div>
         </div>
@@ -105,7 +106,7 @@
         {% if messages %}
         {% for category, message in messages %}
         <div class="alert alert-{{ category }} alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+            <button type="button" class="close" data-dismiss="alert" aria-label="Fermer"><span
                     aria-hidden="true">&times;</span></button>
             <!-- <strong>Title</strong> --> {{ message }}
         </div>
